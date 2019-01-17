@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script>
+        function Player() {
+            var pid = document.querySelector("#playerid").value;
+            if (pid == 1) {
+                alert("Select the Player First ");
+                return;
+            }
+            var url = "http://cricapi.com/api/playerStats?apikey=A41Gm4yLUGUni3GSKcitjrUXq7g2&pid="+ pid;
+            var promise = fetch(url);
+            
+            promise.then(response => {
+                response.json().then(data => {
+                    //console.log("Data is ", data);
+                    var imageDiv = document.querySelector("#img");
+                    imageDiv.innerHTML = "";
+                    var img = document.createElement("img");
+                    img.src = data.imageURL;
+                    imageDiv.appendChild(img);
+                    var str = data.profile +"\n Batting Style " + data.battingStyle + " /Born " + data.born + " \nName is " + data.fullName
+                    document.querySelector("#result").innerHTML = str;
+                   
+
+
+                }).catch(err => {
+                    alert("Invalid  ");
+                })
+            }).catch(err => {
+                alert("404");
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <b><i></i>
+    <select id="playerid" onchange="Player()">
+        <option value="1">Select Player</option>
+        <option value="253802">Virat kohli</option>
+        <option value="35320">Sachin</option>
+        <option value="28081">Dhoni</option>
+        <option value="34102">Rohit sharma</option>
+        <option value="4188">Don bradman</option>
+        <option value="311592">Mitchell Aaron Starc</option>
+        <option value="7133">Rickey ponting</option>
+        <option value="35263">Virender sehwag</option>
+        <option value="8180">shane watson</option>
+       
+    </select>
+    <div id="img"></div>
+    <div id="result"></div>
+</body>
+
+</html>
